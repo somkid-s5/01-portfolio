@@ -5,23 +5,36 @@ import { supabase } from "@/lib/supabase";
 // This is a Server Component by default in App Router
 export default async function Home() {
   let projects = [];
+  let certificates = [];
 
   try {
-    const { data, error } = await supabase
-      .from('projects')
-      .select('*')
-      .neq('status', 'draft')
-      .neq('status', 'archived')
-      .order('created_at', { ascending: false });
+    const [projectsResult, certsResult] = await Promise.all([
+      supabase
+        .from('projects')
+        .select('*')
+        .neq('status', 'draft')
+        .neq('status', 'archived')
+        .order('created_at', { ascending: false }),
+      supabase
+        .from('certs')
+        .select('*')
+        .order('issue_date', { ascending: false })
+    ]);
 
-    if (error) {
-      console.error("Error fetching projects on server:", error);
+    if (projectsResult.error) {
+      console.error("Error fetching projects:", projectsResult.error);
     } else {
-      projects = data || [];
+      projects = projectsResult.data || [];
+    }
+
+    if (certsResult.error) {
+      console.error("Error fetching certificates:", certsResult.error);
+    } else {
+      certificates = certsResult.data || [];
     }
   } catch (err) {
-    console.error("Unexpected error fetching projects:", err);
+    console.error("Unexpected error fetching data:", err);
   }
 
-  return <HomeClient initialProjects={projects} />;
+  return <HomeClient initialProjects={projects} initialCertificates={certificates} />;
 }

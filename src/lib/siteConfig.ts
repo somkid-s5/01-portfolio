@@ -4,13 +4,13 @@ export type SiteLink = {
 };
 
 export const navLinks: SiteLink[] = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Projects", href: "#projects" },
-  { label: "Skills", href: "#skills" },
-  { label: "Career", href: "#career" },
-  { label: "Certificates", href: "#certificates" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "About", href: "/#about" },
+  { label: "Projects", href: "/projects" },
+  { label: "Certificates", href: "/certificates" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Career", href: "/#career" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export const siteConfig = {

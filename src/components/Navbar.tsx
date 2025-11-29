@@ -11,16 +11,22 @@ const Navbar = () => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50);
 
-            const sections = navLinks.map((link) => link.href.substring(1));
-            const current = sections.find((section) => {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    return rect.top >= 0 && rect.top <= 300;
-                }
-                return false;
-            });
-            if (current) setActiveSection(current);
+            // Only track sections if we are on the home page
+            if (window.location.pathname === '/') {
+                const sections = navLinks
+                    .filter(link => link.href.startsWith('/#'))
+                    .map((link) => link.href.substring(2)); // Remove '/#'
+
+                const current = sections.find((section) => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        const rect = element.getBoundingClientRect();
+                        return rect.top >= 0 && rect.top <= 300;
+                    }
+                    return false;
+                });
+                if (current) setActiveSection(current);
+            }
         };
 
         window.addEventListener("scroll", handleScroll);
@@ -39,19 +45,32 @@ const Navbar = () => {
                     <span className="text-lime-400">.SYS</span>
                 </div>
                 <div className="hidden md:flex space-x-8">
-                    {navLinks.map((item) => (
-                        <a
-                            key={item.label}
-                            href={item.href}
-                            className={`text-sm uppercase tracking-widest font-mono hover:text-emerald-400 transition-colors duration-300 ${activeSection === item.href.substring(1)
-                                ? "text-emerald-400"
-                                : "text-gray-500"
-                                }`}
-                        >
-                            <span className="text-emerald-500/50 mr-1">&gt;</span>
-                            {item.label}
-                        </a>
-                    ))}
+                    {navLinks.map((item) => {
+                        const isHashLink = item.href.startsWith('/#');
+                        const sectionId = isHashLink ? item.href.substring(2) : item.href.substring(1);
+                        // Simple active check: if hash link, check activeSection. If page link, check pathname (needs usePathname hook, but for now let's keep it simple or add usePathname)
+                        // Actually, let's just check if activeSection matches for hash links.
+                        // For page links, we can check if window.location.pathname starts with the href (in a real app use usePathname)
+
+                        const isActive = isHashLink
+                            ? activeSection === sectionId
+                            : false; // We'll rely on Next.js Link for page navigation, but here we are using <a> tags. 
+                        // Let's stick to <a> for now as requested, but we should probably use Next.js <Link> for internal routing.
+
+                        return (
+                            <a
+                                key={item.label}
+                                href={item.href}
+                                className={`text-sm uppercase tracking-widest font-mono hover:text-emerald-400 transition-colors duration-300 ${isActive
+                                    ? "text-emerald-400"
+                                    : "text-gray-500"
+                                    }`}
+                            >
+                                <span className="text-emerald-500/50 mr-1">&gt;</span>
+                                {item.label}
+                            </a>
+                        )
+                    })}
                 </div>
             </div>
         </nav>

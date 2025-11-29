@@ -1,24 +1,46 @@
 "use client";
 
-import React, { useState } from "react";
-import { Lock, Hash, CheckCircle, Clock, AlertCircle, X } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Cert } from "@/types/certificate";
+import { Lock, Hash, CheckCircle, Clock, AlertCircle, Search, Filter, X } from "lucide-react";
+import Image from "next/image";
 
-interface CertificatesProps {
+interface CertificatesClientProps {
     initialCertificates: Cert[];
 }
 
-const Certificates = ({ initialCertificates }: CertificatesProps) => {
+export default function CertificatesClient({ initialCertificates }: CertificatesClientProps) {
+    const [certificates, setCertificates] = useState<Cert[]>(initialCertificates);
+    const [filter, setFilter] = useState("all");
+    const [search, setSearch] = useState("");
+    const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [selectedCert, setSelectedCert] = useState<Cert | null>(null);
 
-    // Filter only highlighted certificates for the homepage, or fallback to recent ones
-    let displayCerts = initialCertificates.filter(c => c.highlight).slice(0, 4);
+    useEffect(() => {
+        const handleMouseMove = (e: MouseEvent) => {
+            setMousePos({ x: e.clientX, y: e.clientY });
+        };
 
-    if (displayCerts.length === 0) {
-        displayCerts = initialCertificates.slice(0, 4);
-    }
+        window.addEventListener("mousemove", handleMouseMove);
+        return () => {
+            window.removeEventListener("mousemove", handleMouseMove);
+        };
+    }, []);
+
+    const spotlightStyle = {
+        background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(16, 185, 129, 0.1), transparent 40%)`,
+    };
+
+    const filteredCertificates = certificates.filter((cert) => {
+        const matchesFilter = filter === "all" || cert.status === filter;
+        const certName = cert.name || "";
+        const certVendor = cert.vendor || "";
+        const matchesSearch = certName.toLowerCase().includes(search.toLowerCase()) ||
+            certVendor.toLowerCase().includes(search.toLowerCase());
+        return matchesFilter && matchesSearch;
+    });
 
     const getStatusIcon = (status: string) => {
         switch (status) {
@@ -63,24 +85,62 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
     };
 
     return (
-        <section id="certificates" className="py-32 bg-[#020202] relative">
-            <div className="max-w-7xl mx-auto px-6">
+        <div className="min-h-screen bg-[#050505] text-white selection:bg-emerald-500 selection:text-black font-sans overflow-x-hidden relative">
+            {/* --- Background Effects --- */}
+            <div
+                className="fixed inset-0 pointer-events-none z-50 transition-opacity duration-300"
+                style={spotlightStyle}
+            ></div>
+            <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 brightness-100 contrast-150"></div>
+                <div className="absolute inset-0 matrix-bg pointer-events-none"></div>
+            </div>
+
+            <Navbar />
+
+            <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
                 <div className="flex flex-col items-center mb-16">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-emerald-900/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest mb-4">
                         <Lock size={12} /> SECURE VAULT
                     </div>
-                    <h2 className="text-4xl font-bold mb-4 text-white">
-                        VERIFIED <span className="text-emerald-500">CREDENTIALS</span>
-                    </h2>
-                    <p className="text-gray-500 max-w-lg text-center font-mono text-sm">
-                        // Accessing encrypted certification database...
-                        <br />
-                        // Hover to view Holographic Verification Badge.
+                    <h1 className="text-5xl font-bold mb-6 text-white text-center">
+                        CERTIFICATION <span className="text-emerald-500">DATABASE</span>
+                    </h1>
+                    <p className="text-gray-400 max-w-2xl text-center text-lg mb-12">
+                        Comprehensive record of verified credentials, licenses, and ongoing professional development tracks.
                     </p>
+
+                    {/* Search and Filter */}
+                    <div className="w-full max-w-4xl flex flex-col md:flex-row gap-4 mb-12">
+                        <div className="relative flex-1 group">
+                            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 group-focus-within:text-emerald-500 transition-colors" size={20} />
+                            <input
+                                type="text"
+                                placeholder="Search credentials..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                className="w-full bg-[#0a0a0a] border border-gray-800 rounded-lg py-4 pl-12 pr-4 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-mono text-sm"
+                            />
+                        </div>
+                        <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
+                            {['all', 'passed', 'in_progress'].map((f) => (
+                                <button
+                                    key={f}
+                                    onClick={() => setFilter(f)}
+                                    className={`px-6 py-4 rounded-lg border font-mono text-sm whitespace-nowrap transition-all ${filter === f
+                                        ? "bg-emerald-900/20 border-emerald-500 text-emerald-400"
+                                        : "bg-[#0a0a0a] border-gray-800 text-gray-400 hover:border-gray-600"
+                                        }`}
+                                >
+                                    {f === 'all' ? 'ALL RECORDS' : f.toUpperCase().replace('_', ' ')}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-6">
-                    {displayCerts.map((cert) => (
+                    {filteredCertificates.map((cert) => (
                         <div
                             key={cert.id}
                             onClick={() => setSelectedCert(cert)}
@@ -142,16 +202,21 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
                     ))}
                 </div>
 
-                <div className="mt-12 text-center">
-                    <Link
-                        href="/certificates"
-                        className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-900/10 border border-emerald-500/30 text-emerald-400 font-mono text-sm hover:bg-emerald-900/20 hover:border-emerald-500/50 transition-all group"
-                    >
-                        ACCESS FULL DATABASE
-                        <span className="group-hover:translate-x-1 transition-transform">&gt;&gt;</span>
-                    </Link>
-                </div>
-            </div>
+                {filteredCertificates.length === 0 && (
+                    <div className="text-center py-20 border border-dashed border-gray-800 rounded-xl">
+                        <p className="text-gray-500 text-lg">No certificates found matching your criteria.</p>
+                        <button
+                            onClick={() => {
+                                setSearch("");
+                                setFilter("all");
+                            }}
+                            className="mt-4 text-emerald-500 hover:underline"
+                        >
+                            Clear all filters
+                        </button>
+                    </div>
+                )}
+            </main>
 
             {/* Image Popup Modal */}
             {selectedCert && (
@@ -179,8 +244,8 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
                     </div>
                 </div>
             )}
-        </section>
-    );
-};
 
-export default Certificates;
+            <Footer />
+        </div>
+    );
+}

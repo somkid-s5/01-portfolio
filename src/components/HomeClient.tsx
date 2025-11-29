@@ -11,12 +11,14 @@ import Certificates from "@/components/Certificates";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { Project } from "@/types/project";
+import { Cert } from "@/types/certificate";
 
 interface HomeClientProps {
     initialProjects: Project[];
+    initialCertificates: Cert[];
 }
 
-export default function HomeClient({ initialProjects }: HomeClientProps) {
+export default function HomeClient({ initialProjects, initialCertificates }: HomeClientProps) {
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
@@ -56,7 +58,7 @@ export default function HomeClient({ initialProjects }: HomeClientProps) {
                 <Projects projects={initialProjects} />
                 <Skills />
                 <Career />
-                <Certificates />
+                <Certificates initialCertificates={initialCertificates} />
                 <Contact />
             </main>
             <Footer />
