@@ -4,7 +4,6 @@ import React, { useState, useMemo } from "react";
 import { Search, Filter, X } from "lucide-react";
 import { Project } from "@/types/project";
 import ProjectCard from "@/components/ProjectCard";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 interface ProjectsClientProps {
@@ -59,8 +58,6 @@ const ProjectsClient = ({ initialProjects }: ProjectsClientProps) => {
 
     return (
         <div className="min-h-screen bg-[#050505] text-white selection:bg-emerald-500 selection:text-black font-sans">
-            <Navbar />
-
             <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
                 <div className="mb-12">
                     <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 text-white">

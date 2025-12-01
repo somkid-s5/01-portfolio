@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Cert } from '@/types/certificate';
 import { Lock, Hash, CheckCircle, Clock, AlertCircle, Search, Filter, X } from 'lucide-react';
@@ -113,7 +112,6 @@ export default function CertificatesClient({ initialCertificates }: Certificates
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 brightness-100 contrast-150"></div>
         <div className="absolute inset-0 matrix-bg pointer-events-none"></div>
       </div>
-      <Navbar />
       <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
         <div className="flex flex-col items-center mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-emerald-900/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest mb-4">

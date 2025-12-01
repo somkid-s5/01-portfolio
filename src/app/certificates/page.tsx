@@ -10,7 +10,7 @@ export default async function CertificatesPage() {
     try {
         const { data, error } = await supabase
             .from('certs')
-            .select('*')
+            .select('id,name,vendor,status,issue_date,badge_image_url,credential_url,credential_id,highlight')
             .order('issue_date', { ascending: false });
 
         if (error) {

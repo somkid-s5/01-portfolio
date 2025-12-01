@@ -40,16 +40,16 @@ const Career = () => {
               </div>
               <ul className="space-y-3 text-gray-400 text-sm">
                 <li className="flex gap-3">
-                  <span className="text-emerald-500 mt-1">▹</span>
+                  <span className="text-emerald-500 mt-1">-</span>
                   Managed large-scale infrastructure combining Physical Servers (HPE, Lenovo, DELL,
                   Veritas, Oracle SPARC) and Virtualization (VMware vCenter, Oracle LDOM).
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-emerald-500 mt-1">▹</span>
+                  <span className="text-emerald-500 mt-1">-</span>
                   Execute backup & restore processes for VMware using Veritas NetBackup.
                 </li>
                 <li className="flex gap-3">
-                  <span className="text-emerald-500 mt-1">▹</span>
+                  <span className="text-emerald-500 mt-1">-</span>
                   Troubleshoot client system issues as assigned.
                 </li>
               </ul>

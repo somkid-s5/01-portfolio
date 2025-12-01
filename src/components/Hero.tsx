@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Typewriter from './Typewriter';
-import { Terminal, Server, Activity, ChevronDown } from 'lucide-react';
+import { Terminal, Server, Activity, ChevronDown, Download } from 'lucide-react';
 
 const Hero = () => {
   return (
@@ -48,10 +48,12 @@ const Hero = () => {
               View Projects
             </a>
             <a
-              href="#contact"
-              className="px-8 py-4 glass-panel hover:bg-white/5 text-white font-bold rounded-lg transition-all duration-300 border-l-4 border-l-transparent hover:border-l-lime-400"
+              href="/resume.pdf"
+              download
+              className="px-8 py-4 glass-panel hover:bg-white/5 text-white font-bold rounded-lg transition-all duration-300 border-l-4 border-l-transparent hover:border-l-lime-400 flex items-center gap-2"
             >
-              Contact Me
+              <Download size={18} />
+              Download Resume
             </a>
           </div>
         </div>

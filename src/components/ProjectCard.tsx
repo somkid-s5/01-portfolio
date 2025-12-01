@@ -52,7 +52,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     badgeBg: 'bg-emerald-500/20',
                     badgeText: 'text-emerald-400',
                     badgeBorder: 'border-emerald-500/30',
-                    glowColor: 'bg-emerald-500/5'
+                    glowColor: 'bg-emerald-500/5',
+                    shadow: 'hover:shadow-emerald-500/10'
                 };
             case 'purple':
                 return {
@@ -60,7 +61,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     badgeBg: 'bg-purple-500/20',
                     badgeText: 'text-purple-400',
                     badgeBorder: 'border-purple-500/30',
-                    glowColor: 'bg-purple-500/5'
+                    glowColor: 'bg-purple-500/5',
+                    shadow: 'hover:shadow-purple-500/10'
                 };
             case 'lime':
                 return {
@@ -68,7 +70,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     badgeBg: 'bg-lime-500/20',
                     badgeText: 'text-lime-400',
                     badgeBorder: 'border-lime-500/30',
-                    glowColor: 'bg-lime-500/5'
+                    glowColor: 'bg-lime-500/5',
+                    shadow: 'hover:shadow-lime-500/10'
                 };
             case 'red':
                 return {
@@ -76,7 +79,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     badgeBg: 'bg-red-500/20',
                     badgeText: 'text-red-400',
                     badgeBorder: 'border-red-500/30',
-                    glowColor: 'bg-red-500/5'
+                    glowColor: 'bg-red-500/5',
+                    shadow: 'hover:shadow-red-500/10'
                 };
             default: // blue
                 return {
@@ -84,7 +88,8 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
                     badgeBg: 'bg-blue-500/20',
                     badgeText: 'text-blue-400',
                     badgeBorder: 'border-blue-500/30',
-                    glowColor: 'bg-blue-500/5'
+                    glowColor: 'bg-blue-500/5',
+                    shadow: 'hover:shadow-blue-500/10'
                 };
         }
     };
@@ -97,7 +102,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
     return (
         <Link href={`/projects/${project.slug}`} className="block h-full">
             <div
-                className={`group relative overflow-hidden rounded-xl bg-[#0a0a0a] border border-white/5 ${styles.borderColor} transition-all duration-500 flex flex-col justify-between p-8 min-h-[300px] hover:shadow-2xl hover:shadow-${color}-500/10 hover:-translate-y-1 h-full`}
+                className={`group relative overflow-hidden rounded-xl bg-[#0a0a0a] border border-white/5 ${styles.borderColor} transition-all duration-500 flex flex-col justify-between p-8 min-h-[300px] hover:shadow-2xl ${styles.shadow} hover:-translate-y-1 h-full`}
             >
                 {project.cover_image_url && (
                     <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500">

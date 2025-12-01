@@ -33,8 +33,7 @@ export const siteConfig = {
     name: "Smart Dev",
     email: "contact@smart-sys.dev",
     social: {
-      github: "https://github.com/placeholder",
-      linkedin: "https://www.linkedin.com/in/placeholder",
+      github: "https://github.com/somkid-s5",
       website: "https://smart-sys.dev",
     },
   },

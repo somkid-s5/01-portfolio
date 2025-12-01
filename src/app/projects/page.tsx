@@ -10,7 +10,7 @@ export default async function ProjectsPage() {
     try {
         const { data, error } = await supabase
             .from('projects')
-            .select('*')
+            .select('id,title,slug,description,status,tech_stack,github_url,demo_url,cover_image_url,category,key_features,created_at,started_at,finished_at')
             .neq('status', 'draft')
             .neq('status', 'archived')
             .order('created_at', { ascending: false });
