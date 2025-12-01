@@ -6,10 +6,10 @@ export type SiteLink = {
 export const navLinks: SiteLink[] = [
   { label: "Home", href: "/#home" },
   { label: "About", href: "/#about" },
-  { label: "Projects", href: "/projects" },
-  { label: "Certificates", href: "/certificates" },
-  { label: "Skills", href: "/#skills" },
+  { label: "Projects", href: "/#projects" },
   { label: "Career", href: "/#career" },
+  { label: "Certificates", href: "/#certificates" },
+  { label: "Skills", href: "/#skills" },
   { label: "Contact", href: "/#contact" },
 ];
 

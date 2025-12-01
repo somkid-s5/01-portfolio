@@ -88,6 +88,7 @@
 :root {
   color-scheme: dark;
   background-color: var(--color-bg);
+  scroll-behavior: smooth;
 }
 
 * {

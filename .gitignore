@@ -1,40 +1,8 @@
-<<<<<<< HEAD
-# dependencies
-=======
 # Dependencies
->>>>>>> 8bda33d (git)
 /node_modules
 /.pnp
 .pnp.js
 
-<<<<<<< HEAD
-# testing
-/coverage
-
-# next.js
-/.next/
-/out/
-
-# production
-/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
-
-# vercel
-.vercel
-
-# typescript
-=======
 # Testing
 /coverage
 
@@ -63,6 +31,5 @@ yarn-error.log*
 .vercel
 
 # TypeScript
->>>>>>> 8bda33d (git)
 *.tsbuildinfo
 next-env.d.ts

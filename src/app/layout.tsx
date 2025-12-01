@@ -1,19 +1,19 @@
-import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
-import "./globals.css";
-import { siteConfig } from "@/lib/siteConfig";
+import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
+import './globals.css';
+import { siteConfig } from '@/lib/siteConfig';
 
 const sans = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
 });
 
 const mono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-mono",
-  display: "swap",
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -38,11 +38,11 @@ export const metadata: Metadata = {
         alt: `${siteConfig.name} open graph image`,
       },
     ],
-    locale: "en_US",
-    type: "website",
+    locale: 'en_US',
+    type: 'website',
   },
   twitter: {
-    card: "summary_large_image",
+    card: 'summary_large_image',
     title: siteConfig.name,
     description: siteConfig.description,
     images: [siteConfig.ogImage],
@@ -53,18 +53,25 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#050505",
+  themeColor: '#050505',
 };
 
 type RootLayoutProps = {
   children: React.ReactNode;
 };
 
+import Navbar from '@/components/Navbar';
+import SpotlightBackground from '@/components/SpotlightBackground';
+
+// ... imports ...
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" className={`${sans.variable} ${mono.variable} dark`} suppressHydrationWarning>
       <body className="min-h-screen bg-background text-text antialiased">
         <div className="absolute inset-0 -z-10 bg-grid-lines opacity-40" aria-hidden />
+        <SpotlightBackground />
+        <Navbar />
         {children}
       </body>
     </html>

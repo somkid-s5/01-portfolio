@@ -67,7 +67,7 @@ const Hero = () => {
               <div className="w-3 h-3 rounded-full bg-green-500"></div>
             </div>
             <div className="font-mono text-xs text-emerald-400 space-y-1">
-              <p>$ systemctl status k8s</p>
+              <p>$ systemctl status smart</p>
               <p className="text-white">● active (running)</p>
               <p className="text-gray-500">Loaded: loaded...</p>
             </div>
