@@ -21,7 +21,7 @@ interface HomeClientProps {
 export default function HomeClient({ initialProjects, initialCertificates }: HomeClientProps) {
   return (
     <div className="min-h-screen text-white selection:bg-emerald-500 selection:text-black font-sans overflow-x-hidden relative">
-      <main>
+      <main className="pb-24 md:pb-0">
         <Reveal width="100%">
           <Hero />
         </Reveal>

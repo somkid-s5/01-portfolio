@@ -117,10 +117,10 @@ export default function CertificatesClient({ initialCertificates }: Certificates
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-emerald-900/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest mb-4">
             <Lock size={12} /> SECURE VAULT
           </div>
-          <h1 className="text-5xl font-bold mb-6 text-white text-center">
+          <h1 className="text-2xl  md:text-5xl font-bold mb-6 text-white text-center">
             CERTIFICATION <span className="text-emerald-500">DATABASE</span>
           </h1>
-          <p className="text-gray-400 max-w-2xl text-center text-lg mb-12">
+          <p className="text-gray-400 max-w-2xl text-center text-sm md:text-lg mb-12">
             Comprehensive record of verified credentials, licenses, and ongoing professional
             development tracks.
           </p>
@@ -145,7 +145,7 @@ export default function CertificatesClient({ initialCertificates }: Certificates
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
-                  className={`px-6 py-4 rounded-lg border font-mono text-sm whitespace-nowrap transition-all ${
+                  className={`px-2 md:px-4 py-2 rounded-lg border font-mono text-[10px] md:text-sm whitespace-nowrap transition-all ${
                     filter === f
                       ? 'bg-emerald-900/20 border-emerald-500 text-emerald-400'
                       : 'bg-[#0a0a0a] border-gray-800 text-gray-400 hover:border-gray-600'
@@ -162,8 +162,14 @@ export default function CertificatesClient({ initialCertificates }: Certificates
           {filteredCertificates.map((cert) => (
             <div
               key={cert.id}
-              onClick={() => setSelectedCert(cert)}
-              className={`group relative h-72 w-full sm:w-60 bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${getBorderColor(cert.vendor)} flex flex-col cursor-pointer`}
+              onClick={() => {
+                if (window.innerWidth >= 768) {
+                  setSelectedCert(cert);
+                }
+              }}
+              className={`group relative h-72 w-full sm:w-60 bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${getBorderColor(
+                cert.vendor,
+              )} flex flex-col cursor-default md:cursor-pointer`}
             >
               <div className="holo-sheen absolute inset-0 w-full h-full pointer-events-none"></div>
               <div className="sparkles absolute inset-0 w-full h-full pointer-events-none z-30 transition-opacity duration-300"></div>

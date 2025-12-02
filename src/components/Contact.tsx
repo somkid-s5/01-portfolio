@@ -12,10 +12,10 @@ const Contact = () => {
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-emerald-900/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest mb-4">
               <Terminal size={12} /> COMMUNICATION_UPLINK
             </div>
-            <h2 className="text-3xl font-bold text-white mb-2">
+            <h2 className="text-xl md:text-3xl font-bold text-white mb-2">
               Ready to <span className="text-emerald-500">Collaborate?</span>
             </h2>
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-400 text-xs">
               Open for opportunities and interesting projects. Let's build something great together.
             </p>
           </div>
@@ -34,24 +34,6 @@ const Contact = () => {
                 <div className="text-xs text-gray-500 font-mono">Email Me</div>
                 <div className="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">
                   Send Message
-                </div>
-              </div>
-            </a>
-
-            {/* LinkedIn */}
-            <a
-              href={siteConfig.author.social.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 px-5 py-3 bg-[#0a0a0a] border border-gray-800 rounded-lg hover:border-blue-500/50 hover:bg-blue-900/10 transition-all duration-300"
-            >
-              <div className="p-2 rounded-full bg-blue-900/20 text-blue-400 group-hover:scale-110 transition-transform">
-                <Linkedin size={18} />
-              </div>
-              <div className="text-left">
-                <div className="text-xs text-gray-500 font-mono">LinkedIn</div>
-                <div className="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">
-                  Connect
                 </div>
               </div>
             </a>

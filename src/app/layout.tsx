@@ -61,6 +61,7 @@ type RootLayoutProps = {
 };
 
 import Navbar from '@/components/Navbar';
+import MobileNav from '@/components/MobileNav';
 import SpotlightBackground from '@/components/SpotlightBackground';
 
 // ... imports ...
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className="absolute inset-0 -z-10 bg-grid-lines opacity-40" aria-hidden />
         <SpotlightBackground />
         <Navbar />
+        <MobileNav />
         {children}
       </body>
     </html>

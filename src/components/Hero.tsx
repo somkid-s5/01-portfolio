@@ -6,10 +6,13 @@ import { Terminal, Server, Activity, ChevronDown, Download } from 'lucide-react'
 
 const Hero = () => {
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative pt-20">
+    <section
+      id="home"
+      className="min-h-screen flex items-center justify-center relative pt-0 md:pt-20"
+    >
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="z-10">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-emerald-500/30 text-emerald-400 text-xs font-mono tracking-widest uppercase mb-4">
+          <div className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel border-emerald-500/30 text-emerald-400 text-xs font-mono tracking-widest uppercase mb-4">
             <span className="relative flex w-2 h-2">
               <span className="absolute inline-flex w-full h-full rounded-full bg-emerald-200 opacity-75 animate-ping"></span>
               <span className="rounded-full bg-emerald-300 animate-pulse w-2 h-2"></span>
@@ -17,7 +20,7 @@ const Hero = () => {
             SYSTEM ONLINE: READY FOR DEPLOYMENT
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black leading-none tracking-tighter flex flex-col gap-1 md:gap-2">
+          <h1 className="text-3xl sm:text-4xl md:text-7xl font-black leading-none tracking-tighter flex flex-col gap-1 md:gap-2">
             <Typewriter text="EXPLORING" delay={200} speed={80} />
             <Typewriter
               text="LIMITLESS"
@@ -29,7 +32,7 @@ const Hero = () => {
           </h1>
 
           <p
-            className="text-gray-400 text-lg md:text-xl mt-4 max-w-lg leading-relaxed border-l-2 border-emerald-500/20 pl-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-3000 fill-mode-both"
+            className="text-gray-400 text-sm sm:text-base md:text-xl mt-4 max-w-lg leading-relaxed border-l-2 border-emerald-500/20 pl-4 md:pl-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-3000 fill-mode-both"
             style={{ animationDelay: '3.5s' }}
           >
             Fueled by curiosity, powered by grit. A{' '}
@@ -37,12 +40,12 @@ const Hero = () => {
             master the craft. I might not know everything yet, but I learn fast and work hard.
           </p>
           <div
-            className="flex gap-4 pt-4 animate-in fade-in zoom-in duration-1000 delay-4000 fill-mode-both"
+            className="flex flex-col sm:flex-row gap-3 md:gap-4 pt-4 animate-in fade-in zoom-in duration-1000 delay-4000 fill-mode-both"
             style={{ animationDelay: '4s' }}
           >
             <a
               href="#projects"
-              className="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-black font-bold rounded-lg transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] flex items-center gap-2 group"
+              className="px-5 py-3 md:px-8 md:py-4 bg-emerald-600 hover:bg-emerald-500 text-black font-bold text-sm md:text-base rounded-lg transition-all duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:shadow-[0_0_40px_rgba(16,185,129,0.5)] flex items-center justify-center gap-2 group"
             >
               <Terminal size={18} className="group-hover:rotate-12 transition-transform" />
               View Projects
@@ -50,7 +53,7 @@ const Hero = () => {
             <a
               href="/resume.pdf"
               download
-              className="px-8 py-4 glass-panel hover:bg-white/5 text-white font-bold rounded-lg transition-all duration-300 border-l-4 border-l-transparent hover:border-l-lime-400 flex items-center gap-2"
+              className="px-6 py-3 md:px-8 md:py-4 glass-panel hover:bg-white/5 text-white font-bold rounded-lg transition-all duration-300 border-l-4 border-l-transparent hover:border-l-lime-400 flex items-center justify-center gap-2"
             >
               <Download size={18} />
               Download Resume

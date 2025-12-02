@@ -86,10 +86,10 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-emerald-900/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-mono tracking-widest mb-4">
             <Lock size={12} /> SECURE VAULT
           </div>
-          <h2 className="text-4xl font-bold mb-4 text-white">
+          <h2 className="text-xl md:text-4xl font-bold mb-4 text-white">
             VERIFIED <span className="text-emerald-500">CREDENTIALS</span>
           </h2>
-          <p className="text-gray-500 max-w-lg text-center font-mono text-sm">
+          <p className="text-gray-500 max-w-lg text-center font-mono text-xs md:text-sm">
             // Accessing encrypted certification database...
             <br />
             // Hover to view Holographic Verification Badge.
@@ -100,8 +100,14 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
           {displayCerts.map((cert) => (
             <div
               key={cert.id}
-              onClick={() => setSelectedCert(cert)}
-              className={`group relative h-72 w-full sm:w-60 bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${getBorderColor(cert.vendor)} flex flex-col cursor-pointer`}
+              onClick={() => {
+                if (window.innerWidth >= 768) {
+                  setSelectedCert(cert);
+                }
+              }}
+              className={`group relative h-72 w-full sm:w-60 bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${getBorderColor(
+                cert.vendor,
+              )} flex flex-col cursor-default md:cursor-pointer`}
             >
               <div className="holo-sheen absolute inset-0 w-full h-full pointer-events-none"></div>
               <div className="sparkles absolute inset-0 w-full h-full pointer-events-none z-30 transition-opacity duration-300"></div>
@@ -143,7 +149,7 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
                   </h3>
                 </div>
 
-                <div className="pt-4 border-t border-gray-800 flex justify-between items-center mt-auto">
+                <div className="pt-2 border-t border-gray-800 flex justify-between items-center mt-auto">
                   <div className="flex items-center gap-1 text-[10px] text-gray-600 font-mono group-hover:text-white/80 transition-colors">
                     <Hash size={10} /> {cert.id.substring(0, 8)}
                   </div>
@@ -164,7 +170,7 @@ const Certificates = ({ initialCertificates }: CertificatesProps) => {
         <div className="mt-12 text-center">
           <Link
             href="/certificates"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-900/10 border border-emerald-500/30 text-emerald-400 font-mono text-sm hover:bg-emerald-900/20 hover:border-emerald-500/50 transition-all group"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-emerald-900/10 border border-emerald-500/30 text-emerald-400 font-mono text-xs md:text-sm hover:bg-emerald-900/20 hover:border-emerald-500/50 transition-all group"
           >
             ACCESS FULL DATABASE
             <span className="group-hover:translate-x-1 transition-transform">&gt;&gt;</span>
