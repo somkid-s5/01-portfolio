@@ -1,26 +1,28 @@
-import React from "react";
-import CertificatesClient from "@/components/CertificatesClient";
-import { supabase } from "@/lib/supabase";
+import React from 'react';
+import CertificatesClient from '@/components/features/certificates/CertificatesClient';
+
+import { Cert } from '@/types/certificate';
+import { supabase } from '@/lib/supabase';
 
 export const revalidate = 60;
 
 export default async function CertificatesPage() {
-    let certificates = [];
+  let certificates: Cert[] = [];
 
-    try {
-        const { data, error } = await supabase
-            .from('certs')
-            .select('id,name,vendor,status,issue_date,badge_image_url,credential_url,credential_id,highlight')
-            .order('issue_date', { ascending: false });
+  try {
+    const { data, error } = await supabase
+      .from('certs')
+      .select('*')
+      .order('issue_date', { ascending: false });
 
-        if (error) {
-            console.error("Error fetching certificates:", error);
-        } else {
-            certificates = data || [];
-        }
-    } catch (err) {
-        console.error("Unexpected error fetching certificates:", err);
+    if (error) {
+      console.error('Error fetching certificates:', error);
+    } else {
+      certificates = data || [];
     }
+  } catch (err) {
+    console.error('Unexpected error fetching certificates:', err);
+  }
 
-    return <CertificatesClient initialCertificates={certificates} />;
+  return <CertificatesClient initialCertificates={certificates} />;
 }

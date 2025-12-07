@@ -9,10 +9,15 @@ const supabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error(
-    'Missing Supabase configuration: set SUPABASE_URL and SUPABASE_ANON_KEY (or NEXT_PUBLIC_SUPABASE_* for local dev).',
-  )
+  const msg =
+    'Missing Supabase configuration: set SUPABASE_URL and SUPABASE_ANON_KEY (or NEXT_PUBLIC_SUPABASE_* for local dev).'
+  
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(msg)
+  } else {
+    console.warn(msg)
+  }
 }
 
 // Server-only public client for read-only operations; avoid falling back to placeholders so builds fail fast.
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl || 'https://placeholder.supabase.co', supabaseAnonKey || 'placeholder')

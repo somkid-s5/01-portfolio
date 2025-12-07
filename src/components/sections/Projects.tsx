@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { Project } from '@/types/project';
-import ProjectCard from './ProjectCard';
+import ProjectCard from '@/components/features/projects/ProjectCard';
 
 interface ProjectsProps {
   projects: Project[];

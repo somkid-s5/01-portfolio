@@ -1,18 +1,39 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-const supabaseUrl =
-  process.env.SUPABASE_URL ||
-  process.env.NEXT_PUBLIC_SUPABASE_URL
+// Lazy initialization to prevent build-time errors
+let _supabaseAdmin: SupabaseClient | null = null
 
-const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+function getSupabaseAdmin(): SupabaseClient {
+  if (_supabaseAdmin) return _supabaseAdmin
 
-if (!supabaseUrl || !serviceRoleKey) {
-  throw new Error(
-    'Missing Supabase admin configuration: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set on the server.',
-  )
+  const supabaseUrl =
+    process.env.SUPABASE_URL ||
+    process.env.NEXT_PUBLIC_SUPABASE_URL
+
+  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    throw new Error(
+      'Missing Supabase admin configuration: SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set on the server.'
+    )
+  }
+
+  _supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
+  })
+
+  return _supabaseAdmin
 }
 
-// Admin client for trusted server-side paths only (API routes / server actions). Never expose service role to the client bundle.
-export const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
-  auth: { autoRefreshToken: false, persistSession: false },
+// Proxy object that lazily initializes the admin client only when accessed at runtime
+// This allows builds to complete without requiring env vars during static generation
+export const supabaseAdmin = new Proxy({} as SupabaseClient, {
+  get(_target, prop) {
+    const client = getSupabaseAdmin()
+    const value = client[prop as keyof SupabaseClient]
+    if (typeof value === 'function') {
+      return value.bind(client)
+    }
+    return value
+  },
 })

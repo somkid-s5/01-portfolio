@@ -47,16 +47,36 @@ export async function POST(req: Request) {
     req.headers.get('cf-connecting-ip') ||
     'unknown'
 
-  if (!applyRateLimit(ip)) {
-    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
-  }
-
   const body = await req.json().catch(() => null)
   const name = String(body?.name || '').trim()
   const email = String(body?.email || '').trim().toLowerCase()
   const message = String(body?.message || '').trim()
   const honeypot = String(body?.company || '').trim()
   const turnstileToken = typeof body?.token === 'string' ? body.token : undefined
+
+  // Durable rate limiting via Supabase (Email-based)
+  // We check how many messages this email has sent in the last 15 minutes.
+  // Note: IP-based limiting would require a separate table or Redis.
+  if (email) {
+    const fifteenMinutesAgo = new Date(Date.now() - 15 * 60 * 1000).toISOString()
+    const { count, error: countError } = await supabaseAdmin
+      .from('messages')
+      .select('*', { count: 'exact', head: true })
+      .eq('email', email)
+      .gte('created_at', fifteenMinutesAgo)
+
+    if (!countError && count !== null && count >= 5) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      )
+    }
+  }
+
+  // Fallback in-memory IP rate limit (for non-email spam or if email is missing)
+  if (!applyRateLimit(ip)) {
+    return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 })
+  }
 
   if (honeypot) {
     return NextResponse.json({ error: 'Invalid submission.' }, { status: 400 })

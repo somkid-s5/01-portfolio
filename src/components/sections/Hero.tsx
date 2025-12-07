@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Typewriter from './Typewriter';
+import Typewriter from '../Typewriter';
 import { Terminal, Server, Activity, ChevronDown, Download } from 'lucide-react';
 
 const Hero = () => {
@@ -26,7 +26,7 @@ const Hero = () => {
               text="LIMITLESS"
               delay={1400}
               speed={80}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-lime-400 text-glow"
+              className="text-transparent bg-clip-text bg-linear-to-r from-emerald-400 via-teal-300 to-lime-400 text-glow"
             />
             <Typewriter text="POTENTIAL" delay={2400} speed={30} showCursor={true} />
           </h1>
@@ -62,8 +62,8 @@ const Hero = () => {
         </div>
 
         <div className="relative h-[500px] w-full hidden lg:block perspective-1000">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-gradient-to-tr from-emerald-900/50 to-black rounded-xl rotate-12 border border-emerald-500/20 backdrop-blur-sm animate-float">
-            <div className="w-full h-full opacity-20 bg-[linear-gradient(0deg,transparent_24%,#10b981_25%,#10b981_26%,transparent_27%,transparent_74%,#10b981_75%,#10b981_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,#10b981_25%,#10b981_26%,transparent_27%,transparent_74%,#10b981_75%,#10b981_76%,transparent_77%,transparent)] bg-[size:20px_20px]"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-linear-to-tr from-emerald-900/50 to-black rounded-xl rotate-12 border border-emerald-500/20 backdrop-blur-sm animate-float">
+            <div className="w-full h-full opacity-20 bg-[linear-gradient(0deg,transparent_24%,#10b981_25%,#10b981_26%,transparent_27%,transparent_74%,#10b981_75%,#10b981_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,#10b981_25%,#10b981_26%,transparent_27%,transparent_74%,#10b981_75%,#10b981_76%,transparent_77%,transparent)] bg-size-[20px_20px]"></div>
           </div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-40 glass-panel rounded-lg z-20 flex flex-col p-4 animate-float animation-delay-2000 -rotate-6 border-l-4 border-l-lime-500">
             <div className="flex gap-2 mb-2">
@@ -77,10 +77,10 @@ const Hero = () => {
               <p className="text-gray-500">Loaded: loaded...</p>
             </div>
           </div>
-          <div className="absolute top-20 right-10 p-4 glass-panel rounded-xl animate-bounce duration-[3000ms] border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+          <div className="absolute top-20 right-10 p-4 glass-panel rounded-xl animate-bounce duration-3000 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
             <Server className="text-emerald-400 w-8 h-8" />
           </div>
-          <div className="absolute bottom-20 left-10 p-4 glass-panel rounded-xl animate-bounce duration-[4000ms] border border-lime-500/30">
+          <div className="absolute bottom-20 left-10 p-4 glass-panel rounded-xl animate-bounce duration-4000 border border-lime-500/30">
             <Activity className="text-lime-400 w-8 h-8" />
           </div>
         </div>

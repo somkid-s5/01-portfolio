@@ -1,6 +1,8 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Github, Globe, Terminal, Code, Cloud, Lock, ExternalLink } from 'lucide-react';
 import { Project } from '@/types/project';
 
@@ -9,6 +11,8 @@ interface ProjectCardProps {
 }
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  const router = useRouter();
+
   const getProjectIcon = (project: Project) => {
     const stack = (project.tech_stack || []).map((s) => s.toLowerCase());
     if (stack.includes('next.js') || stack.includes('react') || stack.includes('vue'))
@@ -99,11 +103,26 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   const icon = getProjectIcon(project);
   const styles = getProjectStyles(color);
 
+  const goToProject = () => {
+    router.push(`/projects/${project.slug}`);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      goToProject();
+    }
+  };
+
   return (
-    <Link href={`/projects/${project.slug}`} className="block h-full">
-      <div
-        className={`group relative overflow-hidden rounded-xl bg-[#0a0a0a] border border-white/5 ${styles.borderColor} transition-all duration-500 flex flex-col justify-between p-4 sm:p-6 md:p-8 min-h-[280px] hover:shadow-2xl ${styles.shadow} hover:-translate-y-1 h-full`}
-      >
+    <article
+      role="article"
+      tabIndex={0}
+      onClick={goToProject}
+      onKeyDown={handleKeyDown}
+      className={`group relative overflow-hidden rounded-xl bg-[#0a0a0a] border border-white/5 ${styles.borderColor} transition-all duration-500 flex flex-col justify-between p-4 sm:p-6 md:p-8 min-h-[280px] hover:shadow-2xl ${styles.shadow} hover:-translate-y-1 h-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/60`}
+      aria-label={`View project ${project.title}`}
+    >
         {project.cover_image_url && (
           <div className="absolute inset-0 z-0 opacity-20 group-hover:opacity-40 transition-opacity duration-500">
             <Image
@@ -113,7 +132,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent"></div>
           </div>
         )}
 
@@ -158,35 +177,36 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
             )}
           </div>
 
-          <div className="flex gap-4 mt-auto" onClick={(e) => e.stopPropagation()}>
+          <div className="flex gap-4 mt-auto">
             {project.github_url && (
-              <object>
-                <a
-                  href={project.github_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-white transition-colors hover:scale-110 transform duration-200 z-20 relative block"
-                >
-                  <Github size={20} />
-                </a>
-              </object>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(project.github_url!, '_blank', 'noopener,noreferrer');
+                }}
+                className="text-gray-500 hover:text-white transition-colors hover:scale-110 transform duration-200 z-20 relative block cursor-pointer"
+                aria-label="View GitHub Repository"
+              >
+                <Github size={20} />
+              </button>
             )}
             {project.demo_url && (
-              <object>
-                <a
-                  href={project.demo_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-500 hover:text-white transition-colors hover:scale-110 transform duration-200 z-20 relative block"
-                >
-                  <ExternalLink size={20} />
-                </a>
-              </object>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(project.demo_url!, '_blank', 'noopener,noreferrer');
+                }}
+                className="text-gray-500 hover:text-white transition-colors hover:scale-110 transform duration-200 z-20 relative block cursor-pointer"
+                aria-label="View Live Demo"
+              >
+                <ExternalLink size={20} />
+              </button>
             )}
           </div>
         </div>
-      </div>
-    </Link>
+    </article>
   );
 };
 

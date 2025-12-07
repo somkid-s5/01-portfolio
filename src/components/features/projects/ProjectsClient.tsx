@@ -1,64 +1,32 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 import { Search, Filter, X } from 'lucide-react';
 import { Project } from '@/types/project';
-import ProjectCard from '@/components/ProjectCard';
+import ProjectCard from '@/components/features/projects/ProjectCard';
 import Footer from '@/components/Footer';
+import { useProjectFilter } from '@/hooks/useProjectFilter';
 
 interface ProjectsClientProps {
   initialProjects: Project[];
 }
 
 const ProjectsClient = ({ initialProjects }: ProjectsClientProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedTech, setSelectedTech] = useState<string | null>(null);
-
-  // Extract unique categories and tech stack items
-  const categories = useMemo(() => {
-    const cats = new Set<string>();
-    initialProjects.forEach((p) => {
-      const stack = (p.tech_stack || []).map((s) => s.toLowerCase());
-      if (stack.includes('next.js') || stack.includes('react')) cats.add('WEB APP');
-      else if (stack.includes('ansible') || stack.includes('terraform')) cats.add('INFRA');
-      else if (stack.includes('python')) cats.add('SCRIPT');
-      else if (stack.includes('security')) cats.add('SEC');
-      else cats.add('PROJECT');
-    });
-    return Array.from(cats);
-  }, [initialProjects]);
-
-  const allTech = useMemo(() => {
-    const tech = new Set<string>();
-    initialProjects.forEach((p) => {
-      (p.tech_stack || []).forEach((t) => tech.add(t));
-    });
-    return Array.from(tech).sort();
-  }, [initialProjects]);
-
-  const filteredProjects = useMemo(() => {
-    return initialProjects.filter((project) => {
-      const matchesSearch =
-        (project.title || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (project.description || '').toLowerCase().includes(searchQuery.toLowerCase());
-
-      const stack = (project.tech_stack || []).map((s) => s.toLowerCase());
-      let category = 'PROJECT';
-      if (stack.includes('next.js') || stack.includes('react')) category = 'WEB APP';
-      else if (stack.includes('ansible') || stack.includes('terraform')) category = 'INFRA';
-      else if (stack.includes('python')) category = 'SCRIPT';
-      else if (stack.includes('security')) category = 'SEC';
-
-      const matchesCategory = selectedCategory ? category === selectedCategory : true;
-      const matchesTech = selectedTech ? (project.tech_stack || []).includes(selectedTech) : true;
-
-      return matchesSearch && matchesCategory && matchesTech;
-    });
-  }, [initialProjects, searchQuery, selectedCategory, selectedTech]);
+  const {
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    selectedTech,
+    setSelectedTech,
+    categories,
+    allTech,
+    filteredProjects,
+    clearFilters,
+  } = useProjectFilter(initialProjects);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white selection:bg-emerald-500 selection:text-black font-sans">
+    <div className="min-h-screen bg-bg text-white selection:bg-emerald-500 selection:text-black font-sans">
       <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
         <div className="mb-12">
           <h1 className="text-2xl md:text-7xl font-bold tracking-tighter mb-6 text-white">
@@ -123,11 +91,7 @@ const ProjectsClient = ({ initialProjects }: ProjectsClientProps) => {
             ))}
             {(selectedCategory || selectedTech || searchQuery) && (
               <button
-                onClick={() => {
-                  setSearchQuery('');
-                  setSelectedCategory(null);
-                  setSelectedTech(null);
-                }}
+                onClick={clearFilters}
                 className="px-3 py-1 rounded-full text-xs font-mono text-red-400 hover:text-red-300 flex items-center gap-1 ml-auto"
               >
                 <X size={12} /> Clear Filters
@@ -146,14 +110,7 @@ const ProjectsClient = ({ initialProjects }: ProjectsClientProps) => {
         ) : (
           <div className="text-center py-20 border border-dashed border-gray-800 rounded-xl">
             <p className="text-gray-500 text-lg">No projects found matching your criteria.</p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setSelectedCategory(null);
-                setSelectedTech(null);
-              }}
-              className="mt-4 text-emerald-500 hover:underline"
-            >
+            <button onClick={clearFilters} className="mt-4 text-emerald-500 hover:underline">
               Clear all filters
             </button>
           </div>

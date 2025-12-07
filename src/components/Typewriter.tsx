@@ -37,9 +37,10 @@ const Typewriter = ({
         setDisplayedText((prev) => text.slice(0, prev.length + 1));
       }, speed);
       return () => clearTimeout(typeTimeout);
-    } else {
-      setIsTyping(false);
     }
+
+    setIsTyping(false);
+    return; // Explicitly return undefined for consistent return type
   }, [started, displayedText, text, speed]);
 
   return (
