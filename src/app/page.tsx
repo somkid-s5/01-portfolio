@@ -4,6 +4,8 @@ import { supabase } from '@/lib/supabase';
 import { Project } from '@/types/project';
 import { Cert } from '@/types/certificate';
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 // This is a Server Component by default in App Router
 export default async function Home() {
   let projects: Project[] = [];
