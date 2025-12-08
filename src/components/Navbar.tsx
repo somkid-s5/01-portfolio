@@ -41,10 +41,9 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
-        <div className="text-2xl font-bold tracking-tighter flex items-center gap-2 group cursor-pointer">
-          <span className="text-emerald-500 font-mono group-hover:animate-pulse">_</span>
-          SMART
-          <span className="text-lime-400">.SYS</span>
+        <div className="text-2xl font-bold tracking-tighter flex items-center group cursor-pointer">
+          <img src="/slogotext.png" alt="logo" className="h-8 w-auto -mr-2" />
+          MART
         </div>
         <div className="hidden md:flex space-x-8">
           {navLinks.map((item) => {

@@ -14,12 +14,11 @@ export const navLinks: SiteLink[] = [
 ];
 
 export const siteConfig = {
-  name: "SMART.SYS",
-  shortName: "Smart System Engineer",
+  name: "SMART",
+  shortName: "Portfolio",
   description:
     "Infrastructure-first full-stack engineer crafting resilient systems across bare metal, cloud, and web.",
-  url: "https://smart-sys.dev",
-  ogImage: "/og-card.svg",
+  url: "https://smart-th.com",
   keywords: [
     "Next.js 16",
     "React 19",
@@ -30,11 +29,11 @@ export const siteConfig = {
     "Full Stack",
   ] as string[],
   author: {
-    name: "Smart Dev",
-    email: "contact@smart-sys.dev",
+    name: "Smart Somkid Sodsai",
+    email: "somkids.sodsai@gmail.com",
     social: {
       github: "https://github.com/somkid-s5",
-      website: "https://smart-sys.dev",
+      website: "https://smart-th.com",
     },
   },
 } as const;
