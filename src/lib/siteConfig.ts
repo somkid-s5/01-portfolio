@@ -1,6 +1,7 @@
 export type SiteLink = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 export const navLinks: SiteLink[] = [
@@ -8,9 +9,10 @@ export const navLinks: SiteLink[] = [
   { label: "About", href: "/#about" },
   { label: "Projects", href: "/#projects" },
   { label: "Career", href: "/#career" },
-  { label: "Certificates", href: "/#certificates" },
+  { label: "Certifications", href: "/#certifications" },
   { label: "Skills", href: "/#skills" },
   { label: "Contact", href: "/#contact" },
+  { label: "Docs", href: "https://smart-knowledge-hub.vercel.app", external: true },
 ];
 
 export const siteConfig = {

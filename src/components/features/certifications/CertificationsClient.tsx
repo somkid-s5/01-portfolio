@@ -1,22 +1,21 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Footer from '@/components/Footer';
-import { Cert } from '@/types/certificate';
+import { Certification } from '@/types/certification';
 import { Lock, Search } from 'lucide-react';
-import CertificateCard from '@/components/features/certificates/CertificateCard';
-import CertificateModal from '@/components/features/certificates/CertificateModal';
+import CertificationCard from '@/components/features/certifications/CertificationCard';
+import CertificationModal from '@/components/features/certifications/CertificationModal';
 
-interface CertificatesClientProps {
-  initialCertificates: Cert[];
+interface CertificationsClientProps {
+  initialCertifications: Certification[];
 }
 
-export default function CertificatesClient({ initialCertificates }: CertificatesClientProps) {
-  const [certificates, setCertificates] = useState<Cert[]>(initialCertificates);
+export default function CertificationsClient({ initialCertifications }: CertificationsClientProps) {
+  const [certifications] = useState<Certification[]>(initialCertifications);
   const [filter, setFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [selectedCert, setSelectedCert] = useState<Cert | null>(null);
+  const [selectedCert, setSelectedCert] = useState<Certification | null>(null);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -33,7 +32,7 @@ export default function CertificatesClient({ initialCertificates }: Certificates
     background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(16, 185, 129, 0.1), transparent 40%)`,
   };
 
-  const filteredCertificates = certificates.filter((cert) => {
+  const filteredCertifications = certifications.filter((cert) => {
     const matchesFilter = filter === 'all' || cert.status === filter;
     const certName = cert.name || '';
     const certVendor = cert.vendor || '';
@@ -43,6 +42,8 @@ export default function CertificatesClient({ initialCertificates }: Certificates
     return matchesFilter && matchesSearch;
   });
 
+  const filterOptions = ['all', 'passed', 'in_progress', 'expired'];
+
   return (
     <div className="min-h-screen bg-[#050505] text-white selection:bg-emerald-500 selection:text-black font-sans overflow-x-hidden relative">
       {/* --- Background Effects --- */}
@@ -51,7 +52,7 @@ export default function CertificatesClient({ initialCertificates }: Certificates
         style={spotlightStyle}
       ></div>
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 brightness-100 contrast-150"></div>
+        <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-10 brightness-100 contrast-150"></div>
         <div className="absolute inset-0 matrix-bg pointer-events-none"></div>
       </div>
       <main className="pt-32 pb-20 px-6 max-w-7xl mx-auto min-h-screen">
@@ -60,11 +61,11 @@ export default function CertificatesClient({ initialCertificates }: Certificates
             <Lock size={12} /> SECURE VAULT
           </div>
           <h1 className="text-2xl  md:text-5xl font-bold mb-6 text-white text-center">
-            CERTIFICATION <span className="text-emerald-500">DATABASE</span>
+            CERTIFICATIONS <span className="text-emerald-500">DATABASE</span>
           </h1>
           <p className="text-gray-400 max-w-2xl text-center text-sm md:text-lg mb-12">
-            Comprehensive record of verified credentials, licenses, and ongoing professional
-            development tracks.
+            Comprehensive record of verified certifications, credentials, licenses, and ongoing
+            professional development tracks.
           </p>
 
           {/* Search and Filter */}
@@ -75,15 +76,19 @@ export default function CertificatesClient({ initialCertificates }: Certificates
                 size={20}
               />
               <input
+                id="certifications-search"
+                name="certifications-search"
                 type="text"
-                placeholder="Search credentials..."
+                placeholder="Search certifications..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
+                aria-label="Search certifications"
+                autoComplete="off"
                 className="w-full bg-[#0a0a0a] border border-gray-800 rounded-lg py-4 pl-12 pr-4 text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-all font-mono text-sm"
               />
             </div>
             <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0">
-              {['all', 'passed', 'in_progress'].map((f) => (
+              {filterOptions.map((f) => (
                 <button
                   key={f}
                   onClick={() => setFilter(f)}
@@ -101,14 +106,14 @@ export default function CertificatesClient({ initialCertificates }: Certificates
         </div>
 
         <div className="flex flex-wrap justify-center gap-6">
-          {filteredCertificates.map((cert) => (
-            <CertificateCard key={cert.id} cert={cert} onClick={(c) => setSelectedCert(c)} />
+          {filteredCertifications.map((cert) => (
+            <CertificationCard key={cert.id} cert={cert} onClick={(c) => setSelectedCert(c)} />
           ))}
         </div>
 
-        {filteredCertificates.length === 0 && (
+        {filteredCertifications.length === 0 && (
           <div className="text-center py-20 border border-dashed border-gray-800 rounded-xl">
-            <p className="text-gray-500 text-lg">No certificates found matching your criteria.</p>
+            <p className="text-gray-500 text-lg">No certifications found matching your criteria.</p>
             <button
               onClick={() => {
                 setSearch('');
@@ -122,7 +127,7 @@ export default function CertificatesClient({ initialCertificates }: Certificates
         )}
       </main>
 
-      <CertificateModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
+      <CertificationModal cert={selectedCert} onClose={() => setSelectedCert(null)} />
     </div>
   );
 }

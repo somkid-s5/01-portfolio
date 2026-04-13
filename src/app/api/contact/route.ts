@@ -27,7 +27,9 @@ function applyRateLimit(ip: string) {
 
 async function verifyTurnstile(token: string | undefined, ip: string) {
   const secret = process.env.CONTACT_TURNSTILE_SECRET
-  if (!secret) return true
+  if (!secret) {
+    return process.env.NODE_ENV !== 'production'
+  }
   if (!token) return false
 
   const resp = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {

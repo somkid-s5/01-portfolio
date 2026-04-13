@@ -4,7 +4,7 @@ import { AlertTriangle, ArrowLeft } from 'lucide-react'
 export default function NotFound() {
     return (
         <div className="min-h-screen bg-[#050505] text-white flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 brightness-100 contrast-150 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-[url('/noise.svg')] opacity-10 brightness-100 contrast-150 pointer-events-none"></div>
             <div className="absolute inset-0 matrix-bg pointer-events-none opacity-20"></div>
 
             <div className="relative z-10 max-w-lg">

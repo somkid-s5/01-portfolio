@@ -47,6 +47,9 @@ const ProjectsClient = ({ initialProjects }: ProjectsClientProps) => {
                 size={20}
               />
               <input
+                id="projects-search"
+                name="projectsSearch"
+                aria-label="Search projects"
                 type="text"
                 placeholder="Search projects..."
                 value={searchQuery}

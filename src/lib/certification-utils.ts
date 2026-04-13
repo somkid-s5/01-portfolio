@@ -1,4 +1,5 @@
 import { CheckCircle, Clock, AlertCircle } from 'lucide-react';
+import { Certification } from '@/types/certification';
 
 export const getVendorColor = (vendor: string) => {
   const v = (vendor || '').toLowerCase();
@@ -42,4 +43,10 @@ export const getStatusConfig = (status: string) => {
         shadow: '',
       };
   }
+};
+
+export const getCredentialHref = (cert: Pick<Certification, 'credential_url' | 'credential_id'>) => {
+  if (cert.credential_url) return cert.credential_url;
+  if (cert.credential_id) return `https://www.credly.com/badges/${cert.credential_id}`;
+  return null;
 };

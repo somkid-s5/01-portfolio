@@ -1,4 +1,4 @@
-export interface CertCategory {
+export interface CertificationCategory {
     id: string;
     name: string;
     slug: string;
@@ -8,7 +8,7 @@ export interface CertCategory {
     updated_at: string;
 }
 
-export interface Cert {
+export interface Certification {
     id: string;
     cert_type: string; // 'exam', 'course', etc.
     name: string;
@@ -28,5 +28,5 @@ export interface Cert {
     badge_image_url: string | null;
 
     // Joined fields (optional)
-    category?: CertCategory;
+    category?: CertificationCategory;
 }

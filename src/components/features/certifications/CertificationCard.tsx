@@ -2,18 +2,21 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { Hash } from 'lucide-react';
-import { Cert } from '@/types/certificate';
-import { getVendorColor, getBorderColor, getStatusConfig } from '@/lib/certificate-utils';
+import { ExternalLink } from 'lucide-react';
+import { Certification } from '@/types/certification';
+import {
+  getVendorColor,
+  getBorderColor,
+  getCredentialHref,
+} from '@/lib/certification-utils';
 
-interface CertificateCardProps {
-  cert: Cert;
-  onClick?: (cert: Cert) => void;
+interface CertificationCardProps {
+  cert: Certification;
+  onClick?: (cert: Certification) => void;
 }
 
-const CertificateCard = ({ cert, onClick }: CertificateCardProps) => {
-  const statusConfig = getStatusConfig(cert.status);
-  const StatusIcon = statusConfig.icon;
+const CertificationCard = ({ cert, onClick }: CertificationCardProps) => {
+  const credentialHref = getCredentialHref(cert);
 
   const handleClick = () => {
     if (onClick && window.innerWidth >= 768) {
@@ -24,7 +27,7 @@ const CertificateCard = ({ cert, onClick }: CertificateCardProps) => {
   return (
     <div
       onClick={handleClick}
-      className={`group relative h-72 w-full sm:w-60 bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${getBorderColor(
+      className={`group relative h-80 w-full sm:w-60 bg-[#0a0a0a] rounded-xl border border-gray-800 overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl ${getBorderColor(
         cert.vendor,
       )} flex flex-col cursor-default md:cursor-pointer`}
     >
@@ -41,6 +44,7 @@ const CertificateCard = ({ cert, onClick }: CertificateCardProps) => {
               src={cert.badge_image_url}
               alt={cert.name}
               fill
+              sizes="(max-width: 640px) 100vw, 240px"
               className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110"
             />
           ) : (
@@ -68,24 +72,26 @@ const CertificateCard = ({ cert, onClick }: CertificateCardProps) => {
           <h3 className="text-lg font-bold text-gray-100 group-hover:text-white transition-colors leading-tight drop-shadow-md line-clamp-2">
             {cert.name}
           </h3>
+
         </div>
 
-        <div className="pt-2 border-t border-gray-800 flex justify-between items-center mt-auto">
-          <div className="flex items-center gap-1 text-[10px] text-gray-600 font-mono group-hover:text-white/80 transition-colors">
-            <Hash size={10} /> {cert.id.substring(0, 8)}
-          </div>
-          <div className="flex items-center gap-1">
-            <StatusIcon size={12} className={statusConfig.shadow + ' ' + statusConfig.color} />
-            <span
-              className={`text-[10px] ${statusConfig.color} font-bold drop-shadow-[0_0_5px_rgba(52,211,153,0.8)]`}
+        <div className="pt-2 border-t border-gray-800 flex justify-end items-center mt-auto">
+          {credentialHref && (
+            <a
+              href={credentialHref}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1 rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-emerald-300 transition hover:border-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-200"
             >
-              {statusConfig.text}
-            </span>
-          </div>
+              Verify Credential
+              <ExternalLink size={10} />
+            </a>
+          )}
         </div>
       </div>
     </div>
   );
 };
 
-export default CertificateCard;
+export default CertificationCard;

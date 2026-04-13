@@ -1,4 +1,5 @@
 import React from 'react';
+import { PUBLIC_PROJECT_STATUSES } from '@/lib/public-content';
 import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
@@ -19,6 +20,7 @@ export default async function ProjectDetailPage({ params }: ProjectDetailProps) 
     .from('projects')
     .select('*')
     .eq('slug', slug)
+    .in('status', [...PUBLIC_PROJECT_STATUSES])
     .single();
 
   if (error || !project) {

@@ -3,17 +3,20 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
-import { X } from 'lucide-react';
-import { Cert } from '@/types/certificate';
+import { ExternalLink, X } from 'lucide-react';
+import { Certification } from '@/types/certification';
+import { getCredentialHref } from '@/lib/certification-utils';
 
-interface CertificateModalProps {
-  cert: Cert | null;
+interface CertificationModalProps {
+  cert: Certification | null;
   onClose: () => void;
 }
 
-const CertificateModal = ({ cert, onClose }: CertificateModalProps) => {
+const CertificationModal = ({ cert, onClose }: CertificationModalProps) => {
   if (!cert) return null;
   if (typeof document === 'undefined') return null;
+
+  const credentialHref = getCredentialHref(cert);
 
   return createPortal(
     <div
@@ -21,7 +24,10 @@ const CertificateModal = ({ cert, onClose }: CertificateModalProps) => {
       onClick={onClose}
     >
       {/* Main Card Container with "Wow" Frame */}
-      <div className="relative w-full max-w-4xl group" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="relative w-full max-w-3xl group max-h-[calc(100vh-2rem)]"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Animated Glow Border */}
         <div className="absolute -inset-[2px] bg-linear-to-r from-emerald-500 via-teal-500 to-emerald-500 rounded-lg opacity-75 blur-md group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
 
@@ -114,7 +120,7 @@ const CertificateModal = ({ cert, onClose }: CertificateModalProps) => {
           </svg>
 
           {/* Inner Container */}
-          <div className="relative w-full h-full bg-[#080808] overflow-hidden flex flex-col min-h-[550px] border border-emerald-500/20">
+          <div className="relative w-full h-full bg-[#080808] overflow-hidden flex flex-col border border-emerald-500/20 max-h-[calc(100vh-2rem)]">
             {/* Grid Background */}
             <div className="absolute inset-0 matrix-bg opacity-30 pointer-events-none"></div>
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1)_0%,transparent_70%)] pointer-events-none"></div>
@@ -140,13 +146,13 @@ const CertificateModal = ({ cert, onClose }: CertificateModalProps) => {
             </div>
 
             {/* Main Content (Image) */}
-            <div className="relative z-10 p-10 flex-1 flex items-center justify-center">
+            <div className="relative z-10 px-6 py-6 md:px-8 md:py-8 flex-1 flex flex-col items-center justify-center overflow-y-auto">
               {/* Decorative Lines */}
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-px bg-linear-to-r from-transparent via-emerald-500/50 to-transparent"></div>
               <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/3 h-px bg-linear-to-r from-transparent via-emerald-500/50 to-transparent"></div>
 
               {cert.badge_image_url ? (
-                <div className="relative w-full h-[400px] max-w-3xl flex items-center justify-center p-4">
+                <div className="relative w-full h-[240px] md:h-[320px] max-w-2xl flex items-center justify-center p-3 md:p-4">
                   <div className="absolute inset-0 border border-emerald-500/20 rounded-lg bg-black/40 backdrop-blur-sm"></div>
                   {/* Holographic Effect */}
                   <div className="absolute inset-0 holo-sheen opacity-20 pointer-events-none rounded-lg"></div>
@@ -155,14 +161,40 @@ const CertificateModal = ({ cert, onClose }: CertificateModalProps) => {
                     src={cert.badge_image_url}
                     alt="Certificate"
                     fill
+                    sizes="(max-width: 768px) 100vw, 896px"
                     className="object-contain drop-shadow-[0_0_30px_rgba(16,185,129,0.3)] z-20"
                   />
                 </div>
               ) : (
-                <div className="w-full h-[300px] flex items-center justify-center border border-emerald-500/10 bg-black/40 rounded-lg">
-                  <div className="text-9xl font-bold text-emerald-900/20 animate-pulse">?</div>
+                <div className="w-full h-[220px] md:h-[280px] flex items-center justify-center border border-emerald-500/10 bg-black/40 rounded-lg">
+                  <div className="text-7xl md:text-8xl font-bold text-emerald-900/20 animate-pulse">?</div>
                 </div>
               )}
+
+              <div className="mt-4 flex w-full max-w-2xl flex-col md:flex-row md:items-center md:justify-between gap-4 border border-emerald-500/15 bg-black/30 px-4 py-4">
+                <div className="min-w-0">
+                  <p className="text-xs font-mono uppercase tracking-[0.22em] text-emerald-500/70">
+                    Credential Record
+                  </p>
+                  <h3 className="mt-2 text-base md:text-lg font-semibold text-white">{cert.name}</h3>
+                  <p className="mt-1 text-xs md:text-sm text-gray-400 break-all">
+                    {cert.vendor}
+                    {cert.credential_id ? ` :: ${cert.credential_id}` : ''}
+                  </p>
+                </div>
+
+                {credentialHref && (
+                  <a
+                    href={credentialHref}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="shrink-0 inline-flex items-center justify-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-300 transition hover:border-emerald-400 hover:bg-emerald-500/15 hover:text-emerald-200"
+                  >
+                    Verify Credential
+                    <ExternalLink size={14} />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -180,4 +212,4 @@ const CertificateModal = ({ cert, onClose }: CertificateModalProps) => {
   );
 };
 
-export default CertificateModal;
+export default CertificationModal;

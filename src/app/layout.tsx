@@ -1,20 +1,6 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { siteConfig } from '@/lib/siteConfig';
-
-const sans = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const mono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-mono',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -49,7 +35,7 @@ import SpotlightBackground from '@/components/SpotlightBackground';
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable} dark`} suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className="min-h-screen bg-background text-text antialiased">
         <div className="absolute inset-0 -z-10 bg-grid-lines opacity-40" aria-hidden />
         <SpotlightBackground />

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { navLinks } from '@/lib/siteConfig';
-import { Home, User, Layers, Briefcase, Award, Cpu, Mail, Menu, X } from 'lucide-react';
+import { Home, User, Layers, Briefcase, Award, Cpu, Mail, Menu, X, ExternalLink, BookOpen } from 'lucide-react';
 
 const MobileNav = () => {
   const [activeSection, setActiveSection] = useState('home');
@@ -11,7 +11,7 @@ const MobileNav = () => {
 
   // Define primary links (always visible) and secondary links (in menu)
   const primaryLinks = navLinks.slice(0, 4); // Home, About, Projects, Career
-  const secondaryLinks = navLinks.slice(4); // Certificates, Skills, Contact
+  const secondaryLinks = navLinks.slice(4); // Certifications, Skills, Contact
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,12 +46,14 @@ const MobileNav = () => {
         return <Layers size={18} />;
       case 'Career':
         return <Briefcase size={18} />;
-      case 'Certificates':
+      case 'Certifications':
         return <Award size={18} />;
       case 'Skills':
         return <Cpu size={18} />;
       case 'Contact':
         return <Mail size={18} />;
+      case 'Docs':
+        return <BookOpen size={18} />;
       default:
         return <Home size={18} />;
     }
@@ -72,6 +74,8 @@ const MobileNav = () => {
                 <Link
                   key={item.label}
                   href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
                   className={`flex flex-col items-center gap-1 p-2 transition-all duration-300 ${
                     isActive ? 'text-emerald-400' : 'text-gray-500 hover:text-gray-300'
                   }`}
@@ -130,6 +134,8 @@ const MobileNav = () => {
                 <Link
                   key={item.label}
                   href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noreferrer' : undefined}
                   className={`flex flex-col items-center gap-2 p-3 rounded-xl border transition-all duration-300 ${
                     isActive
                       ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
@@ -137,7 +143,10 @@ const MobileNav = () => {
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {getIcon(item.label)}
+                  <div className="relative">
+                    {getIcon(item.label)}
+                    {item.external && <ExternalLink size={10} className="absolute -right-2 -top-1 opacity-70" />}
+                  </div>
                   <span className="text-[8px] font-mono">{item.label}</span>
                 </Link>
               );

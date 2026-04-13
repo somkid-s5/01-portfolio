@@ -1,5 +1,6 @@
 import React from 'react';
 import ProjectsClient from '@/components/features/projects/ProjectsClient';
+import { PUBLIC_PROJECT_STATUSES } from '@/lib/public-content';
 import { supabase } from '@/lib/supabase';
 import { Project } from '@/types/project';
 
@@ -12,8 +13,7 @@ export default async function ProjectsPage() {
     const { data, error } = await supabase
       .from('projects')
       .select('*')
-      .neq('status', 'draft')
-      .neq('status', 'archived')
+      .in('status', [...PUBLIC_PROJECT_STATUSES])
       .order('created_at', { ascending: false });
 
     if (error) {

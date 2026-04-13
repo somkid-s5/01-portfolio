@@ -1,13 +1,13 @@
 import { MetadataRoute } from 'next'
 import { siteConfig } from '@/lib/siteConfig'
+import { PUBLIC_PROJECT_STATUSES } from '@/lib/public-content'
 import { supabase } from '@/lib/supabase'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const { data: projects } = await supabase
         .from('projects')
         .select('slug, updated_at')
-        .neq('status', 'draft')
-        .neq('status', 'archived');
+        .in('status', [...PUBLIC_PROJECT_STATUSES]);
 
     const projectUrls = (projects || []).map((project) => ({
         url: `${siteConfig.url}/projects/${project.slug}`,
@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
             priority: 0.9,
         },
         {
-            url: `${siteConfig.url}/certificates`,
+      url: `${siteConfig.url}/certifications`,
             lastModified: new Date(),
             changeFrequency: 'monthly',
             priority: 0.8,

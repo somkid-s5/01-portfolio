@@ -6,19 +6,19 @@ import About from '@/components/sections/About';
 import Projects from '@/components/sections/Projects';
 import Skills from '@/components/sections/Skills';
 import Career from '@/components/sections/Career';
-import Certificates from '@/components/sections/Certificates';
+import Certifications from '@/components/sections/Certifications';
 import Contact from '@/components/sections/Contact';
 import Footer from '@/components/Footer';
 import { Project } from '@/types/project';
-import { Cert } from '@/types/certificate';
+import { Certification } from '@/types/certification';
 import { Reveal } from '@/components/ui/Reveal';
 
 interface HomeClientProps {
   initialProjects: Project[];
-  initialCertificates: Cert[];
+  initialCertifications: Certification[];
 }
 
-export default function HomeClient({ initialProjects, initialCertificates }: HomeClientProps) {
+export default function HomeClient({ initialProjects, initialCertifications }: HomeClientProps) {
   return (
     <div className="min-h-screen text-white selection:bg-emerald-500 selection:text-black font-sans overflow-x-hidden relative">
       <main className="pb-24 md:pb-0">
@@ -39,7 +39,7 @@ export default function HomeClient({ initialProjects, initialCertificates }: Hom
         </Reveal>
 
         <Reveal width="100%" delay={0.2}>
-          <Certificates initialCertificates={initialCertificates} />
+          <Certifications initialCertifications={initialCertifications} />
         </Reveal>
 
         <Reveal width="100%" delay={0.2}>

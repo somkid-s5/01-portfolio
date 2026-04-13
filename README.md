@@ -26,7 +26,7 @@ My Portfolio is a modern, production-ready personal website designed to showcase
 
 - **🎭 Dynamic Hero**: An engaging landing section featuring an animated typewriter effect that rotates through professional roles.
 - **📂 Projects Showcase**: A powerful grid/list view for projects with advanced filtering/search capabilities and detailed modal views.
-- **📜 Certificates Gallery**: A beautiful fullscreen viewer for certifications with smooth transition animations.
+- **📜 Certifications Gallery**: A beautiful fullscreen viewer for certifications with smooth transition animations.
 - **⏳ Career Timeline**: An interactive visualization of work history and professional milestones.
 - **🧠 Skills Matrix**: A clear, categorized display of technical skills and proficiency levels.
 - **📧 Contact Form**: A secure, rate-limited contact form with real-time validation to easier communication.
@@ -62,8 +62,8 @@ Ensure you have the following installed:
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/01-portfolio.git
-    cd 01-portfolio
+    git clone https://github.com/somkid-s5/portfolio-site.git
+    cd portfolio-site
     ```
 
 2.  **Install dependencies:**
@@ -108,16 +108,6 @@ src/
 - `app/`: Contains the main application routes.
 - `components/sections/`: Components that make up the main landing page.
 - `lib/`: Helper functions and external service configurations.
-
----
-
-## 📸 Screenshots
-
-|                     **Dashboard / Home**                      |                          **Projects View**                          |
-| :-----------------------------------------------------------: | :-----------------------------------------------------------------: |
-| ![Home](https://via.placeholder.com/600x400?text=Home+Screen) | ![Projects](https://via.placeholder.com/600x400?text=Projects+Grid) |
-
-> _Replace the placeholder images above with actual screenshots of your application to give visitors a preview._
 
 ---
 

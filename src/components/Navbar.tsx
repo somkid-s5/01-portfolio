@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { ExternalLink } from 'lucide-react';
 import { navLinks } from '@/lib/siteConfig';
 
 const Navbar = () => {
@@ -56,12 +57,17 @@ const Navbar = () => {
               <Link
                 key={item.label}
                 href={item.href}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noreferrer' : undefined}
                 className={`text-sm uppercase tracking-widest font-mono hover:text-emerald-400 transition-colors duration-300 ${
                   isActive ? 'text-emerald-400' : 'text-gray-500'
                 }`}
               >
                 <span className="text-emerald-500/50 mr-1">&gt;</span>
-                {item.label}
+                <span className="inline-flex items-center gap-1.5">
+                  {item.label}
+                  {item.external && <ExternalLink size={12} className="opacity-70" />}
+                </span>
               </Link>
             );
           })}
