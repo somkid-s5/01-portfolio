@@ -115,8 +115,8 @@ src/
 
 **Smart Somkid Sodsai**
 
-- Website: [Smart Somkid Sodsai](https://smart-th.com)
-- GitHub: [@Smart Somkid Sodsai](https://github.com/somkid-s5)
+- Website: [smart-th.com](https://smart-th.com)
+- GitHub: [@somkid-s5](https://github.com/somkid-s5)
 
 <div align="center">
   <sub>Built with ❤️ by Smart Somkid Sodsai</sub>
