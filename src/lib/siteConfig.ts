@@ -12,7 +12,7 @@ export const navLinks: SiteLink[] = [
   { label: "Certifications", href: "/#certifications" },
   { label: "Skills", href: "/#skills" },
   { label: "Contact", href: "/#contact" },
-  { label: "Docs", href: "https://smart-knowledge-hub.vercel.app", external: true },
+  { label: "Docs", href: "https://doc.smart-th.com", external: true },
 ];
 
 export const siteConfig = {
